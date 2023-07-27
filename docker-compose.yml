@@ -1,0 +1,35 @@
+version: "3.09"
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8102:8102" # Assuming your API runs on port 8102, you can change it if needed
+    depends_on:
+      - database
+    environment:
+      #spring_datasource_url: jdbc:sqlserver://sqlserver2:1433;encrypt=true;trustServerCertificate=true;databaseName=TodoApp6
+      spring_datasource_url: ${SQL_URL}${SQL_DB_NAME}
+      spring_datasource_password: ${SQL_Password}
+    volumes:
+      - app_log:/app/logs
+
+  database:
+    build: ./DB_Docker
+    restart: always
+    ports:
+        - 1433:1433
+    container_name: sqlserver2
+    volumes:
+      - db_data:/var/opt/mssql
+    environment:
+      SA_PASSWORD: ${SQL_Password}
+      ACCEPT_EULA: Y
+      MSSQL_PID: Express
+      SQL_DB_NAME: ${SQL_DB_NAME}
+
+volumes:
+  db_data:
+  app_log:
