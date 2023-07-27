@@ -1,3 +1,0 @@
-SQL_URL="jdbc:sqlserver://sqlserver2:1433;encrypt=true;trustServerCertificate=true;databaseName=TodoApp9"
-SQL_Password:"Password@123"
-SQL_DB_NAME:"TodoApp9"
